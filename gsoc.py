@@ -3,12 +3,15 @@ from bs4 import BeautifulSoup
 from pandas import DataFrame
 
 
-t=input("Enter the Year for which you want to export the organization list( Note that this should be less than the current year)")
-
-
+t=input("Enter the Year for which you want to export the organization list( Note that this should be less than the current year): ")
 url = 'https://summerofcode.withgoogle.com/archive/'+str(t)+'/organizations/'
 
 r = requests.get(url)
+
+if r.status_code == 404:
+    print('Archive of this year is not available. Please run the file again with different year')
+    exit()
+
 
 soup = BeautifulSoup(r.content, 'html.parser')
 
