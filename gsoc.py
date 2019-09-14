@@ -2,7 +2,6 @@ import requests
 from bs4 import BeautifulSoup
 from pandas import DataFrame
 
-
 t=input("Enter the Year for which you want to export the organization list( Note that this should be less than the current year): ")
 url = 'https://summerofcode.withgoogle.com/archive/'+str(t)+'/organizations/'
 
@@ -11,7 +10,6 @@ r = requests.get(url)
 if r.status_code == 404:
     print('Archive of this year is not available. Please run the file again with different year')
     exit()
-
 
 soup = BeautifulSoup(r.content, 'html.parser')
 
@@ -46,14 +44,11 @@ for org_url in link_list:
         slot = projects.findChildren('li')
         slots.append(len(slot))
         idea = soup.select_one(".org__button-container md-button")['href']
-        # idea = ideas[0].select_one('md-button')['href']
         ideas.append(idea)
 
 
 
 table = {'Org' : OrgName , 'Technologies' : techlist , 'Slots' : slots , 'Ideas Page' : ideas , 'Contact' : Contactlink}
-
 df = DataFrame(table)
 export_csv = df.to_csv(r'GSoC-Orgs-'+str(t)+'.csv')
-
 print(r'Done!')
