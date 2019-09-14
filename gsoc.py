@@ -22,7 +22,7 @@ for row in rows:
         link_list.append(abc)
 
 OrgName = []
-Contactlink = []
+contactlink = []
 techlist = []
 slots = []
 ideas = []
@@ -39,7 +39,7 @@ for org_url in link_list:
         mys = ', '.join(lisat)
         techlist.append(mys)
         irc = soup.select_one(".org__meta-button")['href']
-        Contactlink.append(irc)
+        contactlink.append(irc)
         projects = soup.find('ul', class_="project-list-container")
         slot = projects.findChildren('li')
         slots.append(len(slot))
@@ -48,7 +48,7 @@ for org_url in link_list:
 
 
 
-table = {'Org' : OrgName , 'Technologies' : techlist , 'Slots' : slots , 'Ideas Page' : ideas , 'Contact' : Contactlink}
+table = {'Org' : OrgName , 'Technologies' : techlist , 'Slots' : slots , 'Ideas Page' : ideas , 'Contact' : contactlink}
 df = DataFrame(table)
 export_csv = df.to_csv(r'GSoC-Orgs-'+str(t)+'.csv')
 print(r'Done!')
